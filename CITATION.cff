@@ -1,0 +1,26 @@
+cff-version: 1.2.0
+message: "If you use this repository, please cite it as follows:"
+authors:
+  - family-names: "Ellenberg"
+    given-names: "Eytan"
+    orcid: "0000-0003-XXXX-XXXX"
+title: "FAIR-Attribution-Method: Quantitative causal attribution in occupational medicine"
+version: "1.0"
+date-released: "2025-10-05"
+doi: ""
+url: "https://github.com/eytanellenberg/FAIR-Attribution-Method"
+license: "CC BY-NC 4.0"
+keywords:
+  - "Occupational medicine"
+  - "Causal inference"
+  - "Shapley value"
+  - "Risk attribution"
+  - "FAIR framework"
+preferred-citation:
+  type: article
+  title: "From Population Evidence to Individual Attribution: The FAIR Framework for Causal Assessment in Occupational Medicine"
+  author:
+    - family-names: "Ellenberg"
+      given-names: "Eytan"
+  journal: "Occupational Medicine (Oxford University Press)"
+  year: 2025
