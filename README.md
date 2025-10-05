@@ -103,4 +103,8 @@ It is **not a diagnostic or adjudicative tool** and should always be interpreted
 
 ---
 
-Souhaites-tu que je te prépare la **version ultra-compacte (≈160 caractères)** à mettre dans la courte *description* du dépôt (sous le titre GitHub) ?
+© 2025 Eytan Ellenberg. Released under the Creative Commons Attribution-NonCommercial 4.0 International (CC BY-NC 4.0) License.  
+Please cite this repository as: Ellenberg E. *FAIR-Attribution-Method: Quantitative causal attribution in occupational medicine*. Occupational Medicine (OUP), 2025.
+
+
+
