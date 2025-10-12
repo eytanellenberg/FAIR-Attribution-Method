@@ -1,110 +1,147 @@
+# FAIR-Attribution-Method v1.1
 
-
-# FAIR-Attribution-Method
-
-**Author:** Eytan Ellenberg, MD, MPH, PhD
-**Affiliation:** Research Office, Medical Affairs, National Insurance Institute of Israel, Jerusalem
-**Contact:** [eytane@nioi.gov.il](mailto:eytane@nioi.gov.il)
-**License:** Open-access (for academic and educational use)
-**Associated publication:** *From Population Evidence to Individual Attribution: The FAIR Framework for Causal Assessment in Occupational Medicine* (submitted to *Occupational Medicine*, OUP, 2025)
+**Author:** Eytan Ellenberg MD MPH PhD  
+**Affiliation:** Research Office, Medical Affairs, National Insurance Institute of Israel  
+**License:** CC BY 4.0  
+**Release Date:** October 2025  
 
 ---
 
-## 🧠 Overview
+## 📘 Overview
 
-The **FAIR Framework** (*Filtering evidence, Association quantification, Individual partitioning, Reasoned interpretation*) provides a structured, transparent approach for **quantitative causal attribution** in occupational and environmental medicine.
+This repository contains the full implementation of the **FAIR framework**  
+(*Filtering evidence, Association quantification, Individual partitioning, Reasoned interpretation*).  
+FAIR provides a structured and transparent methodology for **individual causal attribution** in occupational medicine.
 
-FAIR integrates systematic evidence appraisal, quantitative risk estimation, and **Shapley-based partitioning** of multifactorial risks to translate epidemiological data into legally interpretable, individual-level causal shares.
+Version 1.1 corresponds to the manuscript submitted to  
+**_Occupational Medicine (Oxford University Press)_**, October 2025.
 
-This repository hosts the computational proof-of-concept accompanying the manuscript.
-
----
-
-## ⚙️ Contents
-
-* `/scripts/` – R and Python functions for FAIR computation
-
-  * `fair_shapley.R`: main allocation algorithm
-  * `association_module.R`: RR/OR conversion and baseline incidence integration
-  * `sensitivity_analysis.R`: Monte Carlo and additive vs. multiplicative checks
-* `/data/` – example datasets and meta-analytic parameters
-* `/docs/` – supplementary materials, OHAT appraisal examples, and workflow diagrams
-* `/results/` – example FAIR outputs (Shapley shares, sensitivity tables, figures)
+FAIR 1.1 includes:
+- Deterministic Shapley allocation of excess risk (standard FAIR)
+- **Monte Carlo FAIR** module for stochastic uncertainty propagation
+- Conceptual **causal Shapley extension** (Heskes 2020)
+- Fully auditable, open-source R workflow compliant with FAIR data principles
 
 ---
 
-## 🚀 How to Use
+## 🔬 Methodological background
 
-### 1️⃣ Install dependencies
+| Step | Purpose | Core methods |
+|------|----------|--------------|
+| **F – Filtering evidence** | Systematic selection and bias appraisal (OHAT) | Exclusion of high-risk meta-analyses |
+| **A – Association quantification** | Extraction of adjusted RR/OR and baseline risk (p₀) | Conversion OR → RR (Zhang & Yu 1998) |
+| **I – Individual partitioning** | Shapley value allocation of excess risk | Game-theoretic fairness (efficiency, symmetry, additivity) |
+| **R – Reasoned interpretation** | Expert contextualization and iterative refinement | Clinical, anatomical, and latency plausibility checks |
 
-In R:
+Future extensions (FAIR–SQS) combine **causal Shapley [Heskes 2020]** with **Monte Carlo** simulation to model correlated exposures.
+
+---
+# FAIR-Attribution-Method v1.1
+
+**Author:** Eytan Ellenberg MD MPH PhD  
+**Affiliation:** Research Office, Medical Affairs, National Insurance Institute of Israel  
+**License:** CC BY 4.0  
+**Release Date:** October 2025  
+
+---
+
+## 📘 Overview
+
+This repository contains the full implementation of the **FAIR framework**  
+(*Filtering evidence, Association quantification, Individual partitioning, Reasoned interpretation*).  
+FAIR provides a structured and transparent methodology for **individual causal attribution** in occupational medicine.
+
+Version 1.1 corresponds to the manuscript submitted to  
+**_Occupational Medicine (Oxford University Press)_**, October 2025.
+
+FAIR 1.1 includes:
+- Deterministic Shapley allocation of excess risk (standard FAIR)
+- **Monte Carlo FAIR** module for stochastic uncertainty propagation
+- Conceptual **causal Shapley extension** (Heskes 2020)
+- Fully auditable, open-source R workflow compliant with FAIR data principles
+
+---
+
+## 🔬 Methodological background
+
+| Step | Purpose | Core methods |
+|------|----------|--------------|
+| **F – Filtering evidence** | Systematic selection and bias appraisal (OHAT) | Exclusion of high-risk meta-analyses |
+| **A – Association quantification** | Extraction of adjusted RR/OR and baseline risk (p₀) | Conversion OR → RR (Zhang & Yu 1998) |
+| **I – Individual partitioning** | Shapley value allocation of excess risk | Game-theoretic fairness (efficiency, symmetry, additivity) |
+| **R – Reasoned interpretation** | Expert contextualization and iterative refinement | Clinical, anatomical, and latency plausibility checks |
+
+Future extensions (FAIR–SQS) combine **causal Shapley [Heskes 2020]** with **Monte Carlo** simulation to model correlated exposures.
+
+---
+
+## 📂 Repository structure
+
+
+---
+
+## ⚙️ Installation
 
 ```r
-install.packages(c("tidyverse", "data.table", "dplyr", "reshape2"))
-```
+# Install dependencies
+install.packages(c("tidyverse", "gtools"))
 
-### 2️⃣ Run example computation
+# Clone repository
+git clone https://github.com/eytanellenberg/FAIR-Attribution-Method.git
+setwd("FAIR-Attribution-Method")
 
-```r
-source("scripts/fair_shapley.R")
-example <- fair_compute("data/example_mesothelioma.csv")
-print(example)
-```
+# Load core functions
+source("FAIR_core.R")
+source("FAIR_functions.R")
+RR_list <- c(asbestos = 6.7, smoking = 1.2)
+p0 <- 1.8e-5
+result <- shapley_allocation(RR_list, p0)
+print(result)
+simulate_FAI(RR_mean = 1.8, RR_low = 1.4, RR_high = 2.2,
+             p0_mean = 0.0008, p0_low = 0.0006, p0_high = 0.001)
+Output interpretation
 
-### 3️⃣ Reproduce figures
+RAI (Individual Attributable Risk): estimated share of disease risk due to exposure.
 
-```r
-source("scripts/plot_shapley.R")
-plot_fair_results(example)
-```
+Shapley share: proportion of total excess risk attributed fairly among exposures.
 
-Outputs include:
+FAI ↔ R cycle: iterative re-computation after new information or expert reassessment.
 
-* Individual causal shares (%)
-* Attributable risks per 100,000
-* Comparison with AF/PAF and Bayesian probability of causation
+🧮 Validation & transparency
 
----
+All data = public meta-analytic or registry sources
 
-## 🧩 FAIR Principles
+OHAT scoring sheets → Annex 1
 
-This repository adheres to **FAIR data principles**:
+Code and Monte Carlo outputs → Annex 2
 
-* **Findable** – structured metadata and clear indexing
-* **Accessible** – open-source repository
-* **Interoperable** – standard CSV/JSON data and R scripts
-* **Reusable** – transparent documentation and modular code
+Reproducibility tested on 10 000 simulations / case
 
----
+📚 Citation
 
-## 🔬 Citation
+Ellenberg E. The FAIR Framework: Structured Reasoning for Individual Causal Attribution in Occupational Medicine.
+Submitted to Occupational Medicine (OUP), 2025.
+FAIR-Attribution-Method v1.1 [Computer software]. GitHub. DOI: to be assigned via Zenodo.
 
-If you use or adapt the FAIR methodology, please cite as:
+🔗 Data availability & DOI
 
-> Ellenberg E. *From Population Evidence to Individual Attribution: The FAIR Framework for Causal Assessment in Occupational Medicine.* Submitted to *Occupational Medicine (Oxford University Press)*, 2025.
+All materials follow the FAIR data principles (Findable, Accessible, Interoperable, Reusable).
+A Zenodo DOI will be minted automatically upon publication of this release.
 
----
+🧩 Acknowledgments
 
-## 🧭 Future Development (FAIR 2.0)
+This repository accompanies the FAIR framework development within the
+National Insurance Institute of Israel (Medical Affairs Office).
+Statistical support: anonymous reviewers of Monte Carlo methods.
 
-The next version will integrate:
+🧠 License
 
-* **Causal Shapley Values (CSV)** for dependence structures
-* **Monte Carlo simulation** for uncertainty quantification
-* **Bayesian inference** for probabilistic attribution
-* **Interactive dashboards** for occupational physicians and legal experts
+Creative Commons Attribution 4.0 International (CC BY 4.0)
+You are free to reuse, modify, and redistribute with proper attribution.
 
----
+Contact: eytane@nioi.gov.il
 
-## ⚠️ Disclaimer
+GitHub: https://github.com/eytanellenberg/FAIR-Attribution-Method
 
-FAIR is designed for research and methodological purposes.
-It is **not a diagnostic or adjudicative tool** and should always be interpreted by qualified experts within medico-legal and ethical frameworks.
-
----
-
-© 2025 Eytan Ellenberg. Released under the Creative Commons Attribution-NonCommercial 4.0 International (CC BY-NC 4.0) License.  
-Please cite this repository as: Ellenberg E. *FAIR-Attribution-Method: Quantitative causal attribution in occupational medicine*. Occupational Medicine (OUP), 2025.
-
-
+## 📂 Repository structure
 
