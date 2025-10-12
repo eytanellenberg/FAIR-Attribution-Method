@@ -1,3 +1,5 @@
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.17331146.svg)](https://doi.org/10.5281/zenodo.17331146)
+
 # FAIR-Attribution-Method v1.1
 
 **Author:** Eytan Ellenberg MD MPH PhD  
